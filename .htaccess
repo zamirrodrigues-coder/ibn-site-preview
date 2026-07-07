@@ -1,0 +1,20 @@
+# IBN Life — site institucional (hospedagem estática Apache/KingHost)
+# SPA em Vite + React Router. Este arquivo garante:
+#  1) a raiz do domínio abrir a home institucional (/site)
+#  2) links diretos (ex.: /site/sobre) não darem 404 (fallback SPA)
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1) Raiz do domínio -> home institucional
+  RewriteRule ^$ /site/ [R=302,L]
+
+  # 2) Fallback SPA: se não for arquivo nem pasta real, serve o index.html
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Não listar diretórios
+Options -Indexes
